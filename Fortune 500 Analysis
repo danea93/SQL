@@ -1,0 +1,77 @@
+# WHAT COMPANIES HAVE AVG EMPLOYEE TENURE OF 4.5?
+SELECT company_name
+, industry
+, avg_employee_tenure
+FROM fortune_companies
+WHERE avg_employee_tenure LIKE '%4.5%'
+;
+
+# WHAT ARE THE THE INDUSTRIES THAT OFFER HEALTH CARE BENEFITS AND AT LEAST 15 PAID DAYS OFF?
+SELECT company_name
+, industry
+, paid_time_off_days
+, healthcare_benefits
+FROM fortune_companies
+WHERE paid_time_off_days >= 15
+AND healthcare_benefits = 1
+;
+
+# WHAT ARE THE COMPANIES IN THE ENERGY OR RETAIL INDUSTRY?
+SELECT industry, company_name
+FROM fortune_companies
+WHERE industry = 'Retail'
+OR industry = 'Energy'
+;
+
+# WHAT ARE THE AVG EMPLOYEE TENURE FOR COMPANIES IN THE RETAIL INDUSTRY?
+SELECT industry
+, company_name
+, avg_employee_tenure
+FROM fortune_companies
+WHERE industry IN ('Retail')
+;
+
+# WHO ARE THE RETAIL COMPANIES THAT OFFER HEALTHCARE BENEFITS AND ATLEAST 15 DAYS -- OF PAID TIME OFF?
+SELECT company_name
+, industry
+, healthcare_benefits
+, paid_time_off_days
+FROM fortune_companies
+WHERE industry IN ('Retail')
+AND healthcare_benefits = 1
+AND maternity_leave_weeks >= 4
+;
+
+# ASSIGN RETAIL COMPANIES INTO CATEGORIES BASED ON THE PAID DAYS OFF THEY PROVIDE THEIR EMPLOYEES. (18 AND OVER IS TIMEOFF FRIENDLY WORKPLACE, 15-17 IS ACCEPTABLE, BELOW 15 IS ABYSMAL)
+SELECT company_name
+, CASE
+ WHEN paid_time_off_days >= 18 THEN 'timeoff friendly workplace'
+ WHEN paid_time_off_days >= 15 THEN 'acceptable'
+ ELSE 'abysmal'
+END as timeoff_friendly
+FROM fortune_companies
+WHERE industry ='Retail'
+;
+
+# WHAT IS THE TOTAL NUMBER OF EMPLOYEES IN THE RETAIL INDUSTRY?
+SELECT industry
+, SUM(employees) AS retail_employees
+FROM fortune_companies
+WHERE industry = 'Retail'
+;
+
+# WHAT IS THE TOTAL NUMBER OF EMPLOYEES IN EACH INDUSTRY? 
+SELECT industry
+, SUM(employees) as industry_employees
+FROM fortune_companies
+GROUP BY industry
+HAVING SUM(employees)
+;
+
+# WHAT INDUSTRIES HAVE ATLEAST 1 MILLION EMPLOYEES?
+SELECT industry
+, SUM(employees) as industry_employees_1
+FROM fortune_companies
+GROUP BY industry
+HAVING SUM(employees)>=1000000
+;
