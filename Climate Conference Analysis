@@ -1,0 +1,61 @@
+Climate Conference Project
+Database: https://www.db-fiddle.com/f/pxMci1sLL945KHKYvpe9W6/1
+
+--LIST ALL THE MEMBERS ID # AND THE HOTEL ID # EACH MEMEBR IS STAYING AT.
+SELECT reservations.member_id
+, hotels.hotel_id
+FROM reservations
+LEFT JOIN hotels
+ON reservations.hotel = hotels.hotel_id
+;
+
+--SHOW THE HOTEL NAME AND ADDRESS FOR EACH MEMBER BY THEIR MEMBER ID #. 
+SELECT reservations.member_id
+, hotels.hotel_name
+, hotels.address
+FROM reservations
+INNER JOIN hotels
+ON reservations.hotel = hotels.hotel_id
+;
+
+-- SHOW THE FIRST AND LAST NAMES OF MEMBERS STAYING AT THE HYATT DOWNTOWN. 
+SELECT vips.last_name
+, vips.first_name
+, hotels.hotel_name
+FROM vips
+INNER JOIN reservations
+ON vips.member_id = reservations.member_id
+RIGHT JOIN hotels
+ON reservations.hotel = hotels.hotel_id
+WHERE hotels.hotel_name = 'Hyatt Downtown'
+;
+
+--NOW INCLUDE THE EVENT NAME AND TYPE THAT EACH MEMEBER IS PRESENTING AT. 
+SELECT vips.last_name
+, vips.first_name
+, hotels.hotel_name
+, events.event_type
+, events.event_name
+FROM vips
+INNER JOIN events
+ON vips.event = events.event_id
+INNER JOIN reservations
+ON vips.member_id = reservations.member_id
+RIGHT JOIN hotels
+ON reservations.hotel = hotels.hotel_id
+WHERE hotels.hotel_name = 'Hyatt Downtown'
+;
+
+--SHOW THE NAMES OF MEMBERS WHO ARE PRESENTING A WORKSHOP. 
+SELECT last_name
+, first_name
+FROM vips 
+WHERE event IN (SELECT event_id FROM events WHERE event_type = 'Workshop')
+;
+
+-- SHOW THE NAMES OF THE MEMBERS WHO'S EVENT NAME HAS 'JUSTICE' IN IT. 
+SELECT last_name
+, first_name
+FROM vips 
+WHERE event IN (SELECT event_id FROM events WHERE event_name LIKE '%Justice%')
+;
