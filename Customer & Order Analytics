@@ -65,14 +65,14 @@ AND orderid <> 'Order ID'
 AND FebSales.quantity >'2'
 ;
 
-Which of the following lines of code will complete the query listed above so that it only retrieves employee IDs (employee_ID)) that:
+8. Which of the following lines of code will complete the query listed above so that it only retrieves employee IDs (employee_ID)) that:
 Start with ‘16’, Have a single character after ‘16’, Followed by ‘0’, And any number of characters in the last position.
 SELECT orderID
 FROM BIT_DB.MarSales
 WHERE orderID LIKE '16_0%'
 ;
 
-How many of each type of headphone were sold in February?
+9. How many of each type of headphone were sold in February?
 SELECT distinct SUM(quantity)
 , FebSales.product
 FROM BIT_DB.FebSales
@@ -82,7 +82,7 @@ AND product LIKE '%headphones%'
 GROUP BY product
 ;
 
-What was the average amount spent per account in February?
+10. What was the average amount spent per account in February?
 SELECT SUM(quantity*price)/COUNT(customers.acctnum)
 FROM BIT_DB.FebSales
 LEFT JOIN customers
@@ -91,7 +91,7 @@ WHERE length(orderid) = 6
 AND orderid <> 'Order ID'
 ;
 
-Find order ids from Georgia (GA) where the order has an average price greater than $1,000. Only find orders from dates beginning with ‘04/1’.
+11. Find order ids from Georgia (GA) where the order has an average price greater than $1,000. Only find orders from dates beginning with ‘04/1’.
 SELECT AprSales.orderID
 FROM BIT_DB.AprSales
 WHERE length(orderid) = 6
@@ -102,7 +102,7 @@ GROUP BY orderID
 HAVING AVG(price) > 1000
 ;
 
-You’ve been given the following results from the MaySales table. Can you reverse engineer a SQL query that returns these results?
+12. You’ve been given the following results from the MaySales table. Can you reverse engineer a SQL query that returns these results?
 SELECT MaySales.location
 , MaySales.orderID
 FROM BIT_DB.MaySales
@@ -110,7 +110,7 @@ WHERE orderID LIKE '1943_5%'
 GROUP BY orderID
 ;
 
-Which product brought in the most revenue in January and how much revenue did it bring in total?
+13. Which product brought in the most revenue in January and how much revenue did it bring in total?
 SELECT SUM(quantity*price)
 , JanSales.Product
 FROM BIT_DB.JanSales
